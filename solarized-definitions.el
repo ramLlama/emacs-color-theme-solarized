@@ -157,7 +157,7 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
            (((background light) (type tty) (min-colors   8))
             ,(solarized-face-for-index facespec 5 t)))))
 
-(defun solarized-color-definitions ()
+(defun solarized-color-definitions (&optional custom-definitions)
   (let ((bold        (if solarized-bold 'bold        'unspecified))
         (bright-bold (if solarized-bold 'unspecified 'bold))
         (underline   (if solarized-underline t 'unspecified))
@@ -777,12 +777,14 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                 (undo-tree-visualizer-unmodified-face (,@fg-cyan))
                 (undo-tree-visualizer-register-face (,@fg-yellow))
                 ;; haskell
-                (haskell-keyword-face (,@fg-cyan)))))))
+                (haskell-keyword-face (,@fg-cyan))
+                ;; custom defintiions
+                ,@(when custom-definitions (funcall custom-definitions)))))))
 
 ;;;###autoload
-(when (boundp 'custom-theme-load-path)
-  (add-to-list 'custom-theme-load-path
-               (file-name-as-directory (file-name-directory load-file-name))))
+;; (when (boundp 'custom-theme-load-path)
+;;   (add-to-list 'custom-theme-load-path
+;;                (file-name-as-directory (file-name-directory load-file-name))))
 
 (defmacro create-solarized-theme (name description color-definitions)
   `(progn
